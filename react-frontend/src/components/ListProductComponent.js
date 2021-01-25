@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ProductService from '../services/ProductService'
+import SearchField from "react-search-field";
 
 class ListProductComponent extends Component {
     constructor(props) {
@@ -11,6 +12,7 @@ class ListProductComponent extends Component {
         this.addProduct = this.addProduct.bind(this);
         this.editProduct = this.editProduct.bind(this);
         this.deleteProduct = this.deleteProduct.bind(this);
+        this.searchByCategory = this.searchByCategory.bind(this);
     }
 
     deleteProduct(id){
@@ -23,6 +25,17 @@ class ListProductComponent extends Component {
     }
     editProduct(id){
         this.props.history.push(`/add-product/${id}`);
+    }
+    searchByCategory(value, event){
+        if (!value.trim()) {
+            ProductService.getProducts().then((res) => {
+                this.setState({ products: res.data});
+            });    
+        } else {
+            ProductService.getProductsByCategory(value).then((res) => {
+                this.setState({ products: res.data});
+            });    
+        }
     }
 
     componentDidMount(){
@@ -39,6 +52,15 @@ class ListProductComponent extends Component {
         return (
             <div>
                  <h2 className="text-center">Products List</h2>
+                <div className = "row">
+                    <SearchField
+                        placeholder="Search by category..."
+                        onEnter={this.searchByCategory}
+                        onSearchClick={this.searchByCategory}
+                        classNames="test-class"
+                    />
+                 </div>
+                 <br></br>
                  <div className = "row">
                     <button className="btn btn-primary" onClick={this.addProduct}> Add Product</button>
                  </div>

@@ -16,6 +16,10 @@ class ProductService {
         return axios.get(PRODUCT_API_BASE_URL + '/' + productId);
     }
 
+    getProductsByCategory(category){
+        return axios.get(PRODUCT_API_BASE_URL + '/category?q=' + category);
+    }
+
     updateProduct(product, productId){
         return axios.put(PRODUCT_API_BASE_URL + '/' + productId, product);
     }
