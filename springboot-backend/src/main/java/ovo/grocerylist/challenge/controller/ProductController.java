@@ -25,7 +25,7 @@ import ovo.grocerylist.challenge.repository.ProductRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class ProductController {
 
 	@Autowired
